@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
+    <title>Admin-JingJang-Store</title>
     <link rel="icon" type="image/png" href="img/IMG_3840.PNG">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,6 +51,7 @@
             border-collapse: collapse;
             white-space: nowrap;
         }
+
 
         th,
         td {
@@ -178,6 +179,7 @@
             color: #2b6cb0;
             text-decoration: underline;
         }
+
         /* Tabs */
         .dashboard-tabs {
             display: flex;
@@ -221,8 +223,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* User Profile Card */
@@ -377,7 +386,7 @@
         function renderUserTable(users) {
             const tbody = document.getElementById('user-list');
             tbody.innerHTML = '';
-            
+
             if (!users || users.length === 0) {
                 tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;">No users found.</td></tr>';
                 return;
@@ -439,8 +448,8 @@
             const tbody = document.getElementById('order-list');
             tbody.innerHTML = '';
 
-            const orders = Array.isArray(ordersData) 
-                ? ordersData 
+            const orders = Array.isArray(ordersData)
+                ? ordersData
                 : (ordersData && Array.isArray(ordersData.data) ? ordersData.data : []);
 
             orders.slice().reverse().forEach(order => {
