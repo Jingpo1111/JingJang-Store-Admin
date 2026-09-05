@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>JingJang Store — Modern Admin Portal</title>
     <link rel="icon" type="image/png" href="img/IMG_3840.PNG">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,7 +14,7 @@
         :root {
             --sidebar-bg: #0f172a;
             --sidebar-hover: #1e293b;
-            --sidebar-active: #3b82f6;
+            --sidebar-active: #2563eb;
             --sidebar-text: #94a3b8;
             --sidebar-text-active: #ffffff;
             --bg-main: #f8fafc;
@@ -30,29 +30,31 @@
             --warning: #f59e0b;
             --radius-lg: 16px;
             --radius-md: 10px;
-            --radius-sm: 6px;
-            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
-            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.05);
-            --shadow-lg: 0 10px 25px -3px rgba(0, 0, 0, 0.08);
+            --radius-sm: 8px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.04);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 12px 28px -4px rgba(0, 0, 0, 0.12);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background-color: var(--bg-main);
             color: var(--text-main);
             min-height: 100vh;
             display: flex;
             overflow-x: hidden;
+            padding-bottom: env(safe-area-inset-bottom);
         }
 
         /* ============================================================
-           SIDEBAR
+           SIDEBAR (DESKTOP & MOBILE DRAWER)
         ============================================================ */
         .sidebar {
             width: 270px;
@@ -65,22 +67,30 @@
             top: 0;
             left: 0;
             bottom: 0;
-            z-index: 100;
-            transition: transform 0.3s ease;
-            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+            z-index: 120;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+            padding-top: env(safe-area-inset-top);
+            padding-bottom: env(safe-area-inset-bottom);
         }
 
         .sidebar-brand {
-            padding: 24px 20px;
+            padding: 22px 20px;
             display: flex;
             align-items: center;
-            gap: 14px;
+            justify-content: space-between;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
 
+        .brand-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
         .brand-logo {
-            width: 44px;
-            height: 44px;
+            width: 42px;
+            height: 42px;
             border-radius: 12px;
             object-fit: cover;
             background: linear-gradient(135deg, #3b82f6, #10b981);
@@ -88,7 +98,7 @@
         }
 
         .brand-info h1 {
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 800;
             color: #ffffff;
             letter-spacing: -0.3px;
@@ -118,13 +128,29 @@
             50% { opacity: 0.4; }
         }
 
+        .btn-sidebar-close {
+            display: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            font-size: 18px;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s;
+        }
+
         .sidebar-menu {
             flex: 1;
-            padding: 20px 12px;
+            padding: 18px 12px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 5px;
+            -webkit-overflow-scrolling: touch;
         }
 
         .menu-label {
@@ -133,7 +159,7 @@
             letter-spacing: 0.8px;
             color: #475569;
             font-weight: 700;
-            padding: 10px 12px 6px;
+            padding: 10px 12px 4px;
         }
 
         .nav-item {
@@ -148,7 +174,7 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
-            border: 1px solid transparent;
+            min-height: 44px;
         }
 
         .nav-item:hover {
@@ -171,7 +197,7 @@
 
         .nav-icon {
             font-size: 17px;
-            width: 20px;
+            width: 22px;
             text-align: center;
         }
 
@@ -180,16 +206,13 @@
             color: white;
             font-size: 11px;
             font-weight: 700;
-            padding: 2px 7px;
+            padding: 2px 8px;
             border-radius: 20px;
         }
 
         .sidebar-footer {
             padding: 16px;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
         }
 
         .btn-storefront {
@@ -198,7 +221,7 @@
             justify-content: center;
             gap: 8px;
             width: 100%;
-            padding: 10px;
+            padding: 12px;
             background: rgba(255, 255, 255, 0.08);
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: #ffffff;
@@ -207,11 +230,25 @@
             font-size: 13px;
             font-weight: 600;
             transition: all 0.2s ease;
+            min-height: 44px;
         }
 
         .btn-storefront:hover {
             background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-1px);
+        }
+
+        /* Sidebar Backdrop on Mobile */
+        .sidebar-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            z-index: 110;
+            animation: fadeIn 0.25s ease;
         }
 
         /* ============================================================
@@ -224,12 +261,13 @@
             display: flex;
             flex-direction: column;
             width: calc(100% - 270px);
+            transition: margin 0.3s ease;
         }
 
         .topbar {
             background-color: #ffffff;
             border-bottom: 1px solid var(--border-color);
-            padding: 16px 30px;
+            padding: 14px 24px;
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -237,25 +275,36 @@
             top: 0;
             z-index: 90;
             box-shadow: var(--shadow-sm);
+            padding-top: max(14px, env(safe-area-inset-top));
         }
 
         .topbar-left {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
         }
 
         .mobile-toggle {
             display: none;
-            background: none;
-            border: none;
-            font-size: 22px;
+            background: #f1f5f9;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            width: 42px;
+            height: 42px;
+            font-size: 20px;
             cursor: pointer;
             color: var(--text-main);
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .mobile-toggle:hover {
+            background: #e2e8f0;
         }
 
         .page-title h2 {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 800;
             color: var(--text-main);
             letter-spacing: -0.3px;
@@ -264,31 +313,32 @@
         .page-title p {
             font-size: 12px;
             color: var(--text-muted);
-            margin-top: 2px;
+            margin-top: 1px;
         }
 
         .topbar-right {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 10px;
         }
 
         .search-box {
             position: relative;
-            width: 280px;
+            width: 260px;
         }
 
         .search-box input {
             width: 100%;
-            padding: 9px 14px 9px 36px;
+            padding: 9px 14px 9px 34px;
             border: 1px solid var(--border-color);
             border-radius: var(--radius-md);
             background-color: var(--bg-main);
-            font-size: 13px;
+            font-size: 13.5px;
             font-family: inherit;
             color: var(--text-main);
             outline: none;
             transition: all 0.2s ease;
+            height: 40px;
         }
 
         .search-box input:focus {
@@ -299,7 +349,7 @@
 
         .search-icon {
             position: absolute;
-            left: 12px;
+            left: 11px;
             top: 50%;
             transform: translateY(-50%);
             font-size: 14px;
@@ -310,7 +360,8 @@
         .btn-refresh {
             background: #f1f5f9;
             border: 1px solid var(--border-color);
-            padding: 9px 14px;
+            height: 40px;
+            padding: 0 14px;
             border-radius: var(--radius-md);
             font-weight: 600;
             font-size: 13px;
@@ -320,44 +371,50 @@
             align-items: center;
             gap: 6px;
             transition: all 0.2s ease;
+            white-space: nowrap;
         }
 
         .btn-refresh:hover {
             background: #e2e8f0;
-            color: #0f172a;
+        }
+
+        /* Mobile full-width search under topbar */
+        .mobile-search-bar {
+            display: none;
+            padding: 12px 18px 4px;
         }
 
         /* ============================================================
            CONTENT CONTAINER & KPI STATS
         ============================================================ */
         .content-container {
-            padding: 28px 30px;
+            padding: 24px;
             flex: 1;
         }
 
         .kpi-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 18px;
-            margin-bottom: 25px;
+            gap: 16px;
+            margin-bottom: 24px;
         }
 
         .kpi-card {
             background: var(--card-bg);
             border-radius: var(--radius-lg);
-            padding: 20px;
+            padding: 18px;
             border: 1px solid var(--border-color);
             box-shadow: var(--shadow-sm);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            transition: all 0.25s ease;
+            transition: all 0.2s ease;
             position: relative;
             overflow: hidden;
         }
 
         .kpi-card:hover {
-            transform: translateY(-3px);
+            transform: translateY(-2px);
             box-shadow: var(--shadow-md);
         }
 
@@ -368,7 +425,6 @@
             left: 0;
             width: 4px;
             height: 100%;
-            background-color: var(--primary);
         }
 
         .kpi-card.kpi-orders::after { background-color: #3b82f6; }
@@ -377,35 +433,36 @@
         .kpi-card.kpi-users::after { background-color: #f59e0b; }
 
         .kpi-info h4 {
-            font-size: 12px;
+            font-size: 11px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.6px;
             color: var(--text-muted);
             font-weight: 700;
         }
 
         .kpi-info .kpi-value {
-            font-size: 26px;
+            font-size: 24px;
             font-weight: 800;
             color: var(--text-main);
-            margin-top: 4px;
-            letter-spacing: -0.5px;
+            margin-top: 3px;
+            letter-spacing: -0.4px;
         }
 
         .kpi-subtext {
             font-size: 11px;
             color: var(--text-muted);
-            margin-top: 3px;
+            margin-top: 2px;
         }
 
         .kpi-icon-box {
-            width: 48px;
-            height: 48px;
+            width: 44px;
+            height: 44px;
             border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
+            font-size: 20px;
+            flex-shrink: 0;
         }
 
         .icon-orders { background: #eff6ff; color: #3b82f6; }
@@ -418,7 +475,7 @@
         ============================================================ */
         .section-view {
             display: none;
-            animation: fadeIn 0.3s ease;
+            animation: fadeIn 0.25s ease;
         }
 
         .section-view.active {
@@ -426,20 +483,19 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(6px); }
+            from { opacity: 0; transform: translateY(4px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Filter Pills Row */
+        /* Filter Pills Row (Horizontally scrollable on mobile) */
         .filters-toolbar {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            flex-wrap: wrap;
             gap: 12px;
             margin-bottom: 16px;
             background: #ffffff;
-            padding: 12px 18px;
+            padding: 12px 16px;
             border-radius: var(--radius-md);
             border: 1px solid var(--border-color);
             box-shadow: var(--shadow-sm);
@@ -448,21 +504,32 @@
         .status-pills {
             display: flex;
             align-items: center;
-            gap: 6px;
-            flex-wrap: wrap;
+            gap: 8px;
+            overflow-x: auto;
+            white-space: nowrap;
+            flex-wrap: nowrap;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+            padding: 2px 0;
+        }
+
+        .status-pills::-webkit-scrollbar {
+            display: none;
         }
 
         .status-pill {
             background: #f1f5f9;
             color: #475569;
-            border: none;
-            padding: 6px 12px;
+            border: 1px solid transparent;
+            padding: 7px 14px;
             border-radius: 20px;
-            font-size: 12px;
+            font-size: 12.5px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s ease;
             font-family: inherit;
+            flex-shrink: 0;
+            min-height: 34px;
         }
 
         .status-pill:hover {
@@ -473,10 +540,11 @@
         .status-pill.active {
             background: #0f172a;
             color: #ffffff;
+            box-shadow: 0 2px 6px rgba(15, 23, 42, 0.2);
         }
 
         /* ============================================================
-           MODERN TABLES
+           MODERN TABLES (TOUCH-SCROLLABLE)
         ============================================================ */
         .modern-table-card {
             background: var(--card-bg);
@@ -487,17 +555,17 @@
         }
 
         .table-header-box {
-            padding: 18px 24px;
+            padding: 16px 20px;
             border-bottom: 1px solid var(--border-color);
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
-            gap: 12px;
+            gap: 10px;
         }
 
         .table-header-box h3 {
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 700;
             color: var(--text-main);
         }
@@ -505,6 +573,7 @@
         .table-wrapper {
             overflow-x: auto;
             width: 100%;
+            -webkit-overflow-scrolling: touch;
         }
 
         table {
@@ -520,21 +589,17 @@
             font-weight: 700;
             text-transform: uppercase;
             font-size: 11px;
-            letter-spacing: 0.6px;
-            padding: 14px 18px;
+            letter-spacing: 0.5px;
+            padding: 12px 16px;
             text-align: left;
             border-bottom: 1px solid var(--border-color);
         }
 
         td {
-            padding: 14px 18px;
+            padding: 12px 16px;
             color: #334155;
             vertical-align: middle;
             border-bottom: 1px solid #f1f5f9;
-        }
-
-        tbody tr {
-            transition: background-color 0.15s ease;
         }
 
         tbody tr:hover {
@@ -552,6 +617,7 @@
             outline: none;
             font-family: inherit;
             transition: all 0.2s ease;
+            min-height: 34px;
         }
 
         .status-Pending { background: #fff7ed; color: #c2410c; border-color: #fed7aa; }
@@ -566,31 +632,32 @@
             background: #fee2e2;
             color: #ef4444;
             border: 1px solid #fca5a5;
-            padding: 6px 12px;
-            border-radius: 6px;
+            padding: 7px 12px;
+            border-radius: var(--radius-sm);
             font-weight: 700;
             font-size: 12px;
             cursor: pointer;
             transition: all 0.2s;
             font-family: inherit;
+            min-height: 34px;
         }
 
         .btn-delete-sm:hover {
             background: #ef4444;
             color: white;
-            border-color: #ef4444;
         }
 
         .btn-view-receipt {
             background: #eff6ff;
             color: #2563eb;
             border: 1px solid #bfdbfe;
-            padding: 5px 10px;
-            border-radius: 6px;
+            padding: 6px 12px;
+            border-radius: var(--radius-sm);
             font-weight: 700;
             font-size: 12px;
             cursor: pointer;
             transition: all 0.2s;
+            min-height: 34px;
         }
 
         .btn-view-receipt:hover {
@@ -599,12 +666,12 @@
         }
 
         /* ============================================================
-           ADD PRODUCT STUDIO (2-COLUMN HIGH-EFFICIENCY LAYOUT)
+           ADD PRODUCT STUDIO (IPHONE & DESKTOP RESPONSIVE)
         ============================================================ */
         .add-product-studio {
             display: grid;
             grid-template-columns: 1.2fr 1fr;
-            gap: 24px;
+            gap: 22px;
             align-items: start;
         }
 
@@ -612,7 +679,7 @@
             background: var(--card-bg);
             border-radius: var(--radius-lg);
             border: 1px solid var(--border-color);
-            padding: 26px;
+            padding: 24px;
             box-shadow: var(--shadow-sm);
         }
 
@@ -620,7 +687,7 @@
             font-size: 16px;
             font-weight: 800;
             color: var(--text-main);
-            margin-bottom: 20px;
+            margin-bottom: 18px;
             display: flex;
             align-items: center;
             gap: 8px;
@@ -634,29 +701,32 @@
 
         .field-label {
             display: block;
-            font-size: 13px;
+            font-size: 13.5px;
             font-weight: 600;
             color: #334155;
             margin-bottom: 6px;
         }
 
         .field-hint {
-            font-size: 11px;
+            font-size: 11.5px;
             color: #94a3b8;
             margin-top: 4px;
+            line-height: 1.4;
         }
 
+        /* 16px font-size prevents iOS automatic zoom on focus! */
         .field-input {
             width: 100%;
-            padding: 10px 14px;
+            padding: 11px 14px;
             border: 1.5px solid var(--border-color);
             border-radius: var(--radius-md);
-            font-size: 13.5px;
+            font-size: 16px;
             font-family: inherit;
             color: var(--text-main);
             background-color: #f8fafc;
             outline: none;
             transition: all 0.2s ease;
+            min-height: 44px;
         }
 
         .field-input:focus {
@@ -669,11 +739,12 @@
             resize: vertical;
             min-height: 90px;
             line-height: 1.5;
+            font-size: 15px;
         }
 
         .input-row-flex {
             display: flex;
-            gap: 10px;
+            gap: 8px;
             align-items: center;
         }
 
@@ -682,13 +753,17 @@
             color: white;
             border: none;
             border-radius: var(--radius-md);
-            padding: 10px 18px;
+            padding: 0 18px;
             font-weight: 700;
             font-size: 13px;
             cursor: pointer;
             white-space: nowrap;
             transition: all 0.2s ease;
             font-family: inherit;
+            min-height: 44px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn-blue-action:hover {
@@ -707,12 +782,13 @@
             -webkit-appearance: none;
             appearance: none;
             width: 44px;
-            height: 42px;
+            height: 44px;
             background: none;
             border: 1.5px solid var(--border-color);
             border-radius: var(--radius-md);
             cursor: pointer;
             padding: 2px;
+            flex-shrink: 0;
         }
 
         .color-box-picker::-webkit-color-swatch {
@@ -735,8 +811,8 @@
             background: #f1f5f9;
             border: 1px solid #e2e8f0;
             border-radius: 20px;
-            padding: 5px 12px;
-            font-size: 12px;
+            padding: 6px 14px;
+            font-size: 13px;
             font-weight: 600;
             color: #334155;
             transition: all 0.2s ease;
@@ -754,8 +830,9 @@
             cursor: pointer;
             color: #94a3b8;
             font-weight: bold;
-            font-size: 14px;
-            margin-left: 3px;
+            font-size: 15px;
+            margin-left: 4px;
+            padding: 2px 4px;
         }
 
         .color-tag-x:hover {
@@ -766,11 +843,16 @@
         .photo-dropzone {
             border: 2px dashed #cbd5e1;
             border-radius: var(--radius-lg);
-            padding: 26px 20px;
+            padding: 24px 16px;
             text-align: center;
             cursor: pointer;
             background: #f8fafc;
             transition: all 0.2s ease;
+            min-height: 110px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         .photo-dropzone:hover {
@@ -779,26 +861,26 @@
         }
 
         .dropzone-icon {
-            font-size: 32px;
+            font-size: 28px;
             color: #94a3b8;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
         }
 
         .dropzone-text {
-            font-size: 13px;
+            font-size: 13.5px;
             font-weight: 600;
             color: #475569;
         }
 
         .dropzone-subtext {
-            font-size: 11px;
+            font-size: 11.5px;
             color: #94a3b8;
             margin-top: 4px;
         }
 
         .thumbnails-flow-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(75px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(72px, 1fr));
             gap: 10px;
             margin-top: 14px;
         }
@@ -822,24 +904,20 @@
 
         .thumb-remove-btn {
             position: absolute;
-            top: 3px;
-            right: 3px;
-            background: rgba(239, 68, 68, 0.9);
+            top: 4px;
+            right: 4px;
+            background: rgba(239, 68, 68, 0.95);
             color: white;
             border: none;
             border-radius: 50%;
-            width: 18px;
-            height: 18px;
-            font-size: 11px;
+            width: 22px;
+            height: 22px;
+            font-size: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             line-height: 1;
-        }
-
-        .thumb-remove-btn:hover {
-            background: #dc2626;
         }
 
         .btn-publish-product {
@@ -849,7 +927,7 @@
             color: white;
             border: none;
             border-radius: var(--radius-md);
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 700;
             cursor: pointer;
             margin-top: 20px;
@@ -860,12 +938,12 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
+            min-height: 50px;
         }
 
         .btn-publish-product:hover:not(:disabled) {
             background: var(--success-hover);
             transform: translateY(-2px);
-            box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4);
         }
 
         .btn-publish-product:disabled {
@@ -884,27 +962,30 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(15, 23, 42, 0.6);
+            background: rgba(15, 23, 42, 0.65);
             backdrop-filter: blur(5px);
             display: flex;
             align-items: center;
             justify-content: center;
             z-index: 200;
+            padding: 16px;
             animation: fadeIn 0.2s ease;
         }
 
         .modal-card {
             background: #ffffff;
             border-radius: var(--radius-lg);
-            padding: 28px;
-            width: 90%;
+            padding: 24px;
+            width: 100%;
             max-width: 440px;
             box-shadow: var(--shadow-lg);
             border: 1px solid var(--border-color);
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .modal-card h3 {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 800;
             color: var(--text-main);
             margin-bottom: 16px;
@@ -924,9 +1005,10 @@
             padding: 10px 18px;
             border-radius: var(--radius-md);
             font-weight: 600;
-            font-size: 13px;
+            font-size: 14px;
             cursor: pointer;
             font-family: inherit;
+            min-height: 44px;
         }
 
         .btn-modal-confirm {
@@ -936,75 +1018,179 @@
             padding: 10px 18px;
             border-radius: var(--radius-md);
             font-weight: 700;
-            font-size: 13px;
+            font-size: 14px;
             cursor: pointer;
             font-family: inherit;
+            min-height: 44px;
         }
 
         /* Toast notifications */
         .toast-container {
             position: fixed;
-            bottom: 24px;
-            right: 24px;
+            bottom: max(20px, env(safe-area-inset-bottom));
+            right: 16px;
+            left: 16px;
             z-index: 300;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
+            pointer-events: none;
         }
 
         .toast {
-            min-width: 280px;
+            width: 100%;
             max-width: 400px;
+            margin: 0 auto;
             padding: 14px 18px;
             border-radius: var(--radius-md);
             color: white;
-            font-size: 13px;
+            font-size: 13.5px;
             font-weight: 600;
             box-shadow: var(--shadow-lg);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            animation: slideIn 0.3s ease;
+            animation: slideUp 0.3s ease;
+            pointer-events: auto;
         }
 
-        @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
-            to { transform: translateX(0); opacity: 1; }
+        @keyframes slideUp {
+            from { transform: translateY(100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
         }
 
         .toast.success { background: #10b981; }
         .toast.error { background: #ef4444; }
-        .toast.info { background: #3b82f6; }
+        .toast.info { background: #2563eb; }
 
-        /* Responsive Layout */
+        /* ============================================================
+           SPECIFIC RESPONSIVE OPTIMIZATIONS (IPHONE 16 PRO & MOBILE)
+        ============================================================ */
         @media (max-width: 1024px) {
             .add-product-studio {
                 grid-template-columns: 1fr;
             }
         }
 
+        /* Mobile & iPhone 16 Pro (402px wide) */
         @media (max-width: 768px) {
             .sidebar {
                 transform: translateX(-100%);
+                width: 290px;
             }
+
             .sidebar.mobile-open {
                 transform: translateX(0);
             }
+
+            .btn-sidebar-close {
+                display: flex;
+            }
+
             .main-wrapper {
                 margin-left: 0;
                 width: 100%;
             }
+
             .mobile-toggle {
+                display: flex;
+            }
+
+            .search-box {
+                display: none; /* Replaced by full-width mobile search input */
+            }
+
+            .mobile-search-bar {
                 display: block;
             }
-            .search-box {
-                width: 160px;
+
+            .mobile-search-bar .search-box {
+                display: block;
+                width: 100%;
             }
+
             .topbar {
-                padding: 14px 18px;
+                padding: 12px 16px;
             }
+
+            .page-title h2 {
+                font-size: 16px;
+            }
+
+            .page-title p {
+                display: none;
+            }
+
             .content-container {
-                padding: 18px;
+                padding: 16px;
+            }
+
+            /* iPhone 16 Pro 2x2 Clean KPI Grid */
+            .kpi-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+                margin-bottom: 20px;
+            }
+
+            .kpi-card {
+                padding: 14px 12px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .kpi-icon-box {
+                position: absolute;
+                top: 12px;
+                right: 12px;
+                width: 34px;
+                height: 34px;
+                font-size: 16px;
+            }
+
+            .kpi-info h4 {
+                font-size: 10px;
+            }
+
+            .kpi-info .kpi-value {
+                font-size: 20px;
+            }
+
+            .kpi-subtext {
+                font-size: 10px;
+            }
+
+            /* Studio Form on Mobile */
+            .form-card {
+                padding: 18px 16px;
+            }
+
+            .field-input {
+                font-size: 16px; /* Prevents iOS safari zoom */
+            }
+
+            .color-selector-row {
+                flex-wrap: nowrap;
+            }
+
+            .color-selector-row input[type="text"] {
+                flex: 1;
+            }
+
+            .thumbnails-flow-grid {
+                grid-template-columns: repeat(auto-fill, minmax(68px, 1fr));
+            }
+
+            /* Filter pills */
+            .filters-toolbar {
+                padding: 10px 12px;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+
+            .table-header-box {
+                padding: 14px 16px;
             }
         }
     </style>
@@ -1012,19 +1198,25 @@
 
 <body>
 
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div class="sidebar-backdrop" id="sidebar-backdrop" onclick="toggleMobileSidebar()"></div>
+
     <!-- ============================================================
          LEFT SIDEBAR NAVIGATION
     ============================================================ -->
     <aside class="sidebar" id="admin-sidebar">
         <div class="sidebar-brand">
-            <img src="img/IMG_3840.PNG" alt="JingJang Logo" class="brand-logo" onerror="this.src='https://res.cloudinary.com/k9ybxprb/image/upload/v1788604967/jingjang_store/test/gmyuomzy63zcjboetzh3.png'">
-            <div class="brand-info">
-                <h1>JingJang Admin</h1>
-                <div class="brand-status">
-                    <span class="status-dot"></span>
-                    <span>System Connected</span>
+            <div class="brand-content">
+                <img src="img/IMG_3840.PNG" alt="JingJang Logo" class="brand-logo" onerror="this.src='https://res.cloudinary.com/k9ybxprb/image/upload/v1788604967/jingjang_store/test/gmyuomzy63zcjboetzh3.png'">
+                <div class="brand-info">
+                    <h1>JingJang Admin</h1>
+                    <div class="brand-status">
+                        <span class="status-dot"></span>
+                        <span>System Online</span>
+                    </div>
                 </div>
             </div>
+            <button type="button" class="btn-sidebar-close" onclick="toggleMobileSidebar()" aria-label="Close Sidebar">&times;</button>
         </div>
 
         <nav class="sidebar-menu">
@@ -1091,7 +1283,7 @@
         <!-- Topbar -->
         <header class="topbar">
             <div class="topbar-left">
-                <button class="mobile-toggle" onclick="toggleMobileSidebar()">☰</button>
+                <button class="mobile-toggle" onclick="toggleMobileSidebar()" aria-label="Open Navigation">☰</button>
                 <div class="page-title">
                     <h2 id="topbar-title">Dashboard Overview</h2>
                     <p id="topbar-subtitle">Monitor store activity, orders, and products</p>
@@ -1109,6 +1301,14 @@
             </div>
         </header>
 
+        <!-- Mobile Full-Width Search Input -->
+        <div class="mobile-search-bar">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="mobile-search-input" placeholder="Search orders, products, users..." oninput="handleTableSearch(this.value)">
+            </div>
+        </div>
+
         <!-- Main Workspace -->
         <main class="content-container">
 
@@ -1116,36 +1316,36 @@
             <div class="kpi-grid">
                 <div class="kpi-card kpi-revenue">
                     <div class="kpi-info">
-                        <h4>Total Revenue</h4>
+                        <h4>Total Sales</h4>
                         <div class="kpi-value" id="kpi-total-revenue">$0.00</div>
-                        <div class="kpi-subtext">From confirmed & completed orders</div>
+                        <div class="kpi-subtext">Completed orders</div>
                     </div>
                     <div class="kpi-icon-box icon-revenue">💰</div>
                 </div>
 
                 <div class="kpi-card kpi-orders">
                     <div class="kpi-info">
-                        <h4>Total Orders</h4>
+                        <h4>Orders</h4>
                         <div class="kpi-value" id="kpi-total-orders">0</div>
-                        <div class="kpi-subtext" id="kpi-orders-subtext">0 pending orders</div>
+                        <div class="kpi-subtext" id="kpi-orders-subtext">0 pending</div>
                     </div>
                     <div class="kpi-icon-box icon-orders">📦</div>
                 </div>
 
                 <div class="kpi-card kpi-products">
                     <div class="kpi-info">
-                        <h4>Store Products</h4>
+                        <h4>Products</h4>
                         <div class="kpi-value" id="kpi-total-products">0</div>
-                        <div class="kpi-subtext">Active items in catalog</div>
+                        <div class="kpi-subtext">Catalog items</div>
                     </div>
                     <div class="kpi-icon-box icon-products">🛍️</div>
                 </div>
 
                 <div class="kpi-card kpi-users">
                     <div class="kpi-info">
-                        <h4>Total Customers</h4>
+                        <h4>Customers</h4>
                         <div class="kpi-value" id="kpi-total-users">0</div>
-                        <div class="kpi-subtext">Registered user accounts</div>
+                        <div class="kpi-subtext">Accounts</div>
                     </div>
                     <div class="kpi-icon-box icon-users">👥</div>
                 </div>
@@ -1158,7 +1358,7 @@
                 <div class="modern-table-card">
                     <div class="table-header-box">
                         <h3>🕒 Recent Orders Activity</h3>
-                        <button class="btn-blue-action" onclick="switchSection('orders')">View All Orders</button>
+                        <button class="btn-blue-action" onclick="switchSection('orders')">View All</button>
                     </div>
                     <div class="table-wrapper">
                         <table>
@@ -1189,7 +1389,7 @@
             <section id="sec-orders" class="section-view">
                 <div class="filters-toolbar">
                     <div class="status-pills" id="order-status-filters">
-                        <button class="status-pill active" onclick="filterOrdersByStatus('ALL')">All Orders</button>
+                        <button class="status-pill active" onclick="filterOrdersByStatus('ALL')">All</button>
                         <button class="status-pill" onclick="filterOrdersByStatus('Pending')">Pending</button>
                         <button class="status-pill" onclick="filterOrdersByStatus('Confirm order')">Confirmed</button>
                         <button class="status-pill" onclick="filterOrdersByStatus('Ordered')">Ordered</button>
@@ -1216,7 +1416,7 @@
                                     <th>Note</th>
                                     <th>Total</th>
                                     <th>Receipt</th>
-                                    <th>Current Status</th>
+                                    <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -1235,13 +1435,13 @@
             ======================================================== -->
             <section id="sec-products" class="section-view">
                 <div class="filters-toolbar">
-                    <div style="display:flex; align-items:center; gap: 10px;">
-                        <span style="font-size: 13px; font-weight: 600; color: #475569;">Category Filter:</span>
-                        <select id="products-cat-filter" class="field-input" style="width: auto; padding: 6px 12px; font-size: 12px;" onchange="filterProductsByCategory(this.value)">
+                    <div style="display:flex; align-items:center; gap: 8px;">
+                        <span style="font-size: 13px; font-weight: 600; color: #475569;">Filter:</span>
+                        <select id="products-cat-filter" class="field-input" style="width: auto; padding: 6px 10px; font-size: 13px; min-height: 36px;" onchange="filterProductsByCategory(this.value)">
                             <option value="ALL">All Categories</option>
                         </select>
                     </div>
-                    <button class="btn-blue-action" onclick="switchSection('add-product')">➕ Add New Product</button>
+                    <button class="btn-blue-action" onclick="switchSection('add-product')">➕ Add Product</button>
                 </div>
 
                 <div class="modern-table-card">
@@ -1272,7 +1472,7 @@
             </section>
 
             <!-- ========================================================
-                 SECTION 4: ADD PRODUCT (2-COLUMN STUDIO)
+                 SECTION 4: ADD PRODUCT (STUDIO)
             ======================================================== -->
             <section id="sec-add-product" class="section-view">
                 <form id="studio-product-form" onsubmit="handleProductSubmit(event)">
@@ -1316,15 +1516,15 @@
 
                             <!-- Color Group Name -->
                             <div class="field-group">
-                                <label class="field-label" for="prod-color-name">Color Radio Group Identifier</label>
-                                <input type="text" id="prod-color-name" class="field-input" placeholder="e.g. color_aceromr228 (auto-slug generated)">
-                                <div class="field-hint">Unique HTML radio group name for selecting variations.</div>
+                                <label class="field-label" for="prod-color-name">Color Group Identifier</label>
+                                <input type="text" id="prod-color-name" class="field-input" placeholder="e.g. color_aceromr228">
+                                <div class="field-hint">Auto-generated slug for radio selection.</div>
                             </div>
 
                             <!-- Specs -->
                             <div class="field-group">
                                 <label class="field-label" for="prod-specs">Specifications (one per line)</label>
-                                <textarea id="prod-specs" class="field-input field-textarea" placeholder="Support: Computer, Android&#10;Connectivity: Bluetooth, Type-C, USB-2.4G&#10;Battery: 500mAh rechargeable"></textarea>
+                                <textarea id="prod-specs" class="field-input field-textarea" placeholder="Support: Computer, Android&#10;Connectivity: Bluetooth, Type-C, USB-2.4G"></textarea>
                                 <div class="field-hint">Each line will become a bullet point in the specs list.</div>
                             </div>
                         </div>
@@ -1337,21 +1537,21 @@
                             <div class="field-group">
                                 <label class="field-label">Add Available Colors</label>
                                 <div class="color-selector-row">
-                                    <input type="text" id="color-name-input" class="field-input" placeholder="Color name (e.g. Black, White, Pink)" onkeydown="if(event.key==='Enter'){event.preventDefault();addColorChip();}">
+                                    <input type="text" id="color-name-input" class="field-input" placeholder="Color name (e.g. Black)" onkeydown="if(event.key==='Enter'){event.preventDefault();addColorChip();}">
                                     <input type="color" id="color-picker-input" class="color-box-picker" value="#1a1a1a" title="Pick swatch color">
                                     <button type="button" class="btn-blue-action" onclick="addColorChip()">Add</button>
                                 </div>
                                 <div id="color-chips-container" class="chips-flow-container"></div>
-                                <div class="field-hint">Enter color name and select swatch, then click Add.</div>
+                                <div class="field-hint">Enter color name, pick swatch, and click Add.</div>
                             </div>
 
                             <!-- Photo Upload -->
-                            <div class="field-group" style="margin-top: 25px;">
-                                <label class="field-label">Product Photos (Upload to Cloudinary)</label>
+                            <div class="field-group" style="margin-top: 22px;">
+                                <label class="field-label">Product Photos (Cloudinary Upload)</label>
                                 <div class="photo-dropzone" onclick="document.getElementById('prod-photos-input').click()">
                                     <div class="dropzone-icon">📸</div>
-                                    <div class="dropzone-text">Click or drag photos here to upload</div>
-                                    <div class="dropzone-subtext">Supports PNG, JPG, WEBP (Multiple images allowed)</div>
+                                    <div class="dropzone-text">Tap or drag photos here to upload</div>
+                                    <div class="dropzone-subtext">PNG, JPG, WEBP (Multiple allowed)</div>
                                 </div>
                                 <input type="file" id="prod-photos-input" multiple accept="image/*" style="display:none;" onchange="handlePhotosSelected(this)">
                                 <div id="photo-thumbnails-grid" class="thumbnails-flow-grid"></div>
@@ -1375,9 +1575,9 @@
                 <div class="modern-table-card" style="max-width: 800px; margin: 0 auto;">
                     <div class="table-header-box">
                         <h3>🏷️ Store Categories</h3>
-                        <div class="input-row-flex">
-                            <input type="text" id="quick-add-cat-name" class="field-input" placeholder="e.g. Smart Watch, Laptop" style="width: 250px;">
-                            <button class="btn-blue-action" onclick="addQuickCategory()">+ Add Category</button>
+                        <div class="input-row-flex" style="width: 100%; max-width: 350px;">
+                            <input type="text" id="quick-add-cat-name" class="field-input" placeholder="New category name" style="min-height: 40px;">
+                            <button class="btn-blue-action" style="min-height: 40px;" onclick="addQuickCategory()">+ Add</button>
                         </div>
                     </div>
                     <div class="table-wrapper">
@@ -1386,7 +1586,7 @@
                                 <tr>
                                     <th style="width: 80px;">ID</th>
                                     <th>Category Name</th>
-                                    <th style="width: 120px;">Action</th>
+                                    <th style="width: 100px;">Action</th>
                                 </tr>
                             </thead>
                             <tbody id="categories-tbody">
@@ -1405,7 +1605,7 @@
             <section id="sec-users" class="section-view">
                 <div class="modern-table-card">
                     <div class="table-header-box">
-                        <h3>👥 Registered Customer Accounts</h3>
+                        <h3>👥 Customer Accounts</h3>
                     </div>
                     <div class="table-wrapper">
                         <table>
@@ -1438,7 +1638,7 @@
             <h3>🏷️ Create New Category</h3>
             <div class="field-group">
                 <label class="field-label" for="modal-cat-name-input">Category Name</label>
-                <input type="text" id="modal-cat-name-input" class="field-input" placeholder="e.g. Phone, Monitor, Keyboard" onkeydown="if(event.key==='Enter'){event.preventDefault();saveNewCategory();}">
+                <input type="text" id="modal-cat-name-input" class="field-input" placeholder="e.g. Phone, Monitor, Headset" onkeydown="if(event.key==='Enter'){event.preventDefault();saveNewCategory();}">
             </div>
             <div class="modal-actions">
                 <button type="button" class="btn-modal-cancel" onclick="closeCategoryModal()">Cancel</button>
@@ -1454,10 +1654,10 @@
         <div class="modal-card" style="max-width: 600px; text-align: center;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
                 <h3 style="margin:0;">🧾 Payment Receipt</h3>
-                <button type="button" onclick="closeReceiptModal()" style="border:none; background:none; font-size:22px; cursor:pointer; color:#64748b;">&times;</button>
+                <button type="button" onclick="closeReceiptModal()" style="border:none; background:none; font-size:24px; cursor:pointer; color:#64748b; padding:4px 8px;">&times;</button>
             </div>
-            <div id="receipt-modal-content" style="max-height: 70vh; overflow-y:auto; display:flex; justify-content:center;">
-                <!-- Image injected here -->
+            <div id="receipt-modal-content" style="max-height: 65vh; overflow-y:auto; display:flex; justify-content:center;">
+                <!-- Receipt image rendered here -->
             </div>
         </div>
     </div>
@@ -1469,13 +1669,11 @@
          JAVASCRIPT LOGIC
     ============================================================ -->
     <script>
-        // API Base Endpoints
         const ORDER_API_URL = CONFIG.API_BASE + '/order';
         const USER_API_URL = CONFIG.API_BASE + '/user';
         const PRODUCT_API_URL = CONFIG.API_BASE + '/products';
         const CATEGORY_API_URL = CONFIG.API_BASE + '/categories';
 
-        // State Data
         let rawOrders = [];
         let rawProducts = [];
         let rawUsers = [];
@@ -1487,19 +1685,16 @@
         let selectedPhotos = [];
         let cartNameManuallyEdited = false;
 
-        // Section Titles Map
         const SECTION_TITLES = {
-            'overview': { title: 'Dashboard Overview', subtitle: 'Real-time performance metrics and recent store transactions' },
-            'orders': { title: 'Orders Management', subtitle: 'Track, update order statuses, and verify payment receipts' },
-            'products': { title: 'Products Catalog', subtitle: 'Manage active catalog items, stock details, and pricing' },
-            'add-product': { title: 'Add New Product', subtitle: 'Upload photos to Cloudinary and register product specifications' },
-            'categories': { title: 'Categories Manager', subtitle: 'Organize your store collections and navigation filters' },
-            'users': { title: 'Customers Directory', subtitle: 'View registered member accounts and contact details' }
+            'overview': { title: 'Dashboard', subtitle: 'Overview metrics and latest transactions' },
+            'orders': { title: 'Orders', subtitle: 'Track and manage customer orders' },
+            'products': { title: 'Products', subtitle: 'Manage active catalog inventory' },
+            'add-product': { title: 'Add Product', subtitle: 'Upload photos & create new product' },
+            'categories': { title: 'Categories', subtitle: 'Organize store collections' },
+            'users': { title: 'Customers', subtitle: 'Registered customer directory' }
         };
 
-        // ============================================================
-        // TOAST NOTIFICATIONS
-        // ============================================================
+        // Toast notifications
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             if (!container) return;
@@ -1517,36 +1712,35 @@
             }, 3500);
         }
 
-        // ============================================================
-        // NAVIGATION & SECTION SWITCHER
-        // ============================================================
+        // Navigation
         function switchSection(sectionId) {
             currentSection = sectionId;
 
-            // Update sidebar nav highlights
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
             const activeNav = document.getElementById('nav-' + sectionId);
             if (activeNav) activeNav.classList.add('active');
 
-            // Update visible section
             document.querySelectorAll('.section-view').forEach(sec => sec.classList.remove('active'));
             const targetSec = document.getElementById('sec-' + sectionId);
             if (targetSec) targetSec.classList.add('active');
 
-            // Update topbar titles
-            const meta = SECTION_TITLES[sectionId] || { title: 'Admin Portal', subtitle: '' };
+            const meta = SECTION_TITLES[sectionId] || { title: 'Admin', subtitle: '' };
             document.getElementById('topbar-title').textContent = meta.title;
             document.getElementById('topbar-subtitle').textContent = meta.subtitle;
 
-            // Clear search input
-            const searchInput = document.getElementById('global-search-input');
-            if (searchInput) searchInput.value = '';
+            // Clear search
+            const searchDesktop = document.getElementById('global-search-input');
+            const searchMobile = document.getElementById('mobile-search-input');
+            if (searchDesktop) searchDesktop.value = '';
+            if (searchMobile) searchMobile.value = '';
 
-            // Mobile sidebar auto-close
+            // Close mobile sidebar
             const sidebar = document.getElementById('admin-sidebar');
+            const backdrop = document.getElementById('sidebar-backdrop');
             if (sidebar) sidebar.classList.remove('mobile-open');
+            if (backdrop) backdrop.style.display = 'none';
 
-            // Fetch latest data if needed
+            // Fetch
             if (sectionId === 'overview') { fetchAllData(); }
             if (sectionId === 'orders') { fetchOrders(); }
             if (sectionId === 'products') { fetchProducts(); }
@@ -1557,17 +1751,25 @@
 
         function toggleMobileSidebar() {
             const sidebar = document.getElementById('admin-sidebar');
-            if (sidebar) sidebar.classList.toggle('mobile-open');
+            const backdrop = document.getElementById('sidebar-backdrop');
+            if (!sidebar) return;
+
+            const isOpen = sidebar.classList.contains('mobile-open');
+            if (isOpen) {
+                sidebar.classList.remove('mobile-open');
+                if (backdrop) backdrop.style.display = 'none';
+            } else {
+                sidebar.classList.add('mobile-open');
+                if (backdrop) backdrop.style.display = 'block';
+            }
         }
 
         function refreshCurrentSection() {
             fetchAllData();
-            showToast('🔄 Refreshed store data', 'info');
+            showToast('🔄 Store data updated', 'info');
         }
 
-        // ============================================================
-        // DATA FETCHING & KPI CALCULATIONS
-        // ============================================================
+        // KPIs
         async function fetchAllData() {
             await Promise.allSettled([
                 fetchOrders(),
@@ -1579,15 +1781,13 @@
         }
 
         function updateKPIs() {
-            // 1. Total Revenue (sum of non-cancelled orders)
             let totalRevenue = 0;
             let pendingCount = 0;
 
             rawOrders.forEach(o => {
                 const status = (o.status || '').toLowerCase();
                 if (status !== 'cancelled') {
-                    const price = parseFloat(o.total) || 0;
-                    totalRevenue += price;
+                    totalRevenue += parseFloat(o.total) || 0;
                 }
                 if (status === 'pending' || status === '') {
                     pendingCount++;
@@ -1596,7 +1796,7 @@
 
             document.getElementById('kpi-total-revenue').textContent = '$' + totalRevenue.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
             document.getElementById('kpi-total-orders').textContent = rawOrders.length;
-            document.getElementById('kpi-orders-subtext').textContent = `${pendingCount} pending order(s)`;
+            document.getElementById('kpi-orders-subtext').textContent = `${pendingCount} pending`;
 
             const pendingBadge = document.getElementById('badge-pending-orders');
             if (pendingBadge) {
@@ -1608,16 +1808,11 @@
                 }
             }
 
-            // 2. Total Products
             document.getElementById('kpi-total-products').textContent = rawProducts.length;
-
-            // 3. Total Users
             document.getElementById('kpi-total-users').textContent = rawUsers.length;
         }
 
-        // ============================================================
-        // ORDERS LOGIC
-        // ============================================================
+        // Orders
         async function fetchOrders() {
             try {
                 const response = await fetch(ORDER_API_URL);
@@ -1635,9 +1830,15 @@
         function filterOrdersByStatus(status) {
             currentStatusFilter = status;
             document.querySelectorAll('#order-status-filters .status-pill').forEach(btn => {
-                btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === status.toLowerCase() || (status === 'ALL' && btn.textContent.trim() === 'All Orders'));
+                btn.classList.toggle('active', btn.textContent.trim().toLowerCase() === status.toLowerCase() || (status === 'ALL' && btn.textContent.trim() === 'All'));
             });
             renderOrdersTable();
+        }
+
+        function getActiveSearchTerm() {
+            const searchDesktop = document.getElementById('global-search-input')?.value || '';
+            const searchMobile = document.getElementById('mobile-search-input')?.value || '';
+            return (searchDesktop || searchMobile).toLowerCase().trim();
         }
 
         function renderOrdersTable() {
@@ -1645,16 +1846,13 @@
             if (!tbody) return;
             tbody.innerHTML = '';
 
-            const searchTerm = (document.getElementById('global-search-input')?.value || '').toLowerCase().trim();
-
+            const searchTerm = getActiveSearchTerm();
             let filtered = rawOrders.slice().reverse();
 
-            // Status filter
             if (currentStatusFilter !== 'ALL') {
                 filtered = filtered.filter(o => (o.status || 'Pending').toLowerCase() === currentStatusFilter.toLowerCase());
             }
 
-            // Search filter
             if (searchTerm && currentSection === 'orders') {
                 filtered = filtered.filter(o => 
                     (o.orderId || '').toLowerCase().includes(searchTerm) ||
@@ -1664,10 +1862,10 @@
                 );
             }
 
-            document.getElementById('orders-count-indicator').textContent = `Showing ${filtered.length} of ${rawOrders.length} orders`;
+            document.getElementById('orders-count-indicator').textContent = `${filtered.length} of ${rawOrders.length} orders`;
 
             if (filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:25px; color:#94a3b8;">No orders match the selected filter.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:25px; color:#94a3b8;">No orders found.</td></tr>';
                 return;
             }
 
@@ -1694,19 +1892,19 @@
                 }
 
                 const receiptBtn = (order.receipt && order.receipt !== 'No Receipt')
-                    ? `<button class="btn-view-receipt" onclick="viewReceiptModal(\`${order.receipt}\`)">View Receipt</button>`
-                    : '<span style="color:#94a3b8; font-size:12px;">No Receipt</span>';
+                    ? `<button class="btn-view-receipt" onclick="viewReceiptModal(\`${order.receipt}\`)">Receipt</button>`
+                    : '<span style="color:#94a3b8; font-size:12px;">None</span>';
 
                 const mapLink = (order.address && order.address.startsWith('http'))
-                    ? `<a href="${order.address}" target="_blank" style="color:#2563eb; font-weight:600; text-decoration:none;">🗺️ View Map</a>`
-                    : (order.address || 'No Address');
+                    ? `<a href="${order.address}" target="_blank" style="color:#2563eb; font-weight:600; text-decoration:none;">🗺️ Map</a>`
+                    : (order.address || '-');
 
                 tbody.innerHTML += `
                     <tr>
                         <td style="font-weight: 700; color: #2563eb;">${order.orderId || '-'}</td>
                         <td style="font-weight: 600;">${order.name || '-'}</td>
                         <td>${order.phone || '-'}</td>
-                        <td style="max-width: 180px; word-break: break-all; font-size: 12px;">${mapLink}</td>
+                        <td style="max-width: 160px; word-break: break-all; font-size: 12px;">${mapLink}</td>
                         <td style="font-size: 12px; line-height: 1.4;">${itemsSummary}</td>
                         <td style="color: #ea580c; font-size: 12px;">${order.note || '-'}</td>
                         <td style="font-weight: 800; color: #16a34a;">$${parseFloat(order.total || 0).toFixed(2)}</td>
@@ -1759,7 +1957,7 @@
                         <td>${order.phone || '-'}</td>
                         <td style="font-weight:800; color:#16a34a;">$${parseFloat(order.total || 0).toFixed(2)}</td>
                         <td>${receiptBtn}</td>
-                        <td><span class="status-select ${statusClass}" style="display:inline-block;">${statusVal}</span></td>
+                        <td><span class="status-select ${statusClass}">${statusVal}</span></td>
                         <td style="color:#64748b; font-size:12px;">${order.date || '-'}</td>
                     </tr>
                 `;
@@ -1775,10 +1973,10 @@
                 });
                 const result = await response.json();
                 if (result.status === 'success') {
-                    showToast(`Order #${orderId} status updated to "${newStatus}"!`, 'success');
+                    showToast(`Order #${orderId} updated to "${newStatus}"!`, 'success');
                     fetchOrders();
                 } else {
-                    showToast('Failed to update status: ' + (result.message || ''), 'error');
+                    showToast('Failed to update status', 'error');
                 }
             } catch (err) {
                 showToast('Error updating status', 'error');
@@ -1786,11 +1984,11 @@
         }
 
         async function deleteOrderConfirm(orderId) {
-            if (!confirm(`Are you sure you want to permanently DELETE Order #${orderId}?`)) return;
+            if (!confirm(`Are you sure you want to delete Order #${orderId}?`)) return;
 
             const pwd = prompt('Enter admin security password:');
             if (pwd !== '15102006') {
-                showToast('Incorrect password. Action aborted.', 'error');
+                showToast('Incorrect password. Action cancelled.', 'error');
                 return;
             }
 
@@ -1798,10 +1996,10 @@
                 const response = await fetch(`${ORDER_API_URL}/${orderId}`, { method: 'DELETE' });
                 const result = await response.json();
                 if (result.status === 'success') {
-                    showToast(`Order #${orderId} deleted permanently.`, 'success');
+                    showToast(`Order #${orderId} deleted.`, 'success');
                     fetchOrders();
                 } else {
-                    showToast('Delete failed: ' + (result.message || ''), 'error');
+                    showToast('Delete failed', 'error');
                 }
             } catch (err) {
                 showToast('Error deleting order', 'error');
@@ -1813,7 +2011,7 @@
             const container = document.getElementById('receipt-modal-content');
             if (!modal || !container) return;
 
-            container.innerHTML = `<img src="${base64Image}" style="max-width:100%; max-height:65vh; border-radius:10px; object-fit:contain; box-shadow:0 4px 15px rgba(0,0,0,0.15);">`;
+            container.innerHTML = `<img src="${base64Image}" style="max-width:100%; max-height:60vh; border-radius:10px; object-fit:contain;">`;
             modal.style.display = 'flex';
         }
 
@@ -1822,9 +2020,7 @@
             if (modal) modal.style.display = 'none';
         }
 
-        // ============================================================
-        // PRODUCTS CATALOG LOGIC
-        // ============================================================
+        // Products
         async function fetchProducts() {
             try {
                 const response = await fetch(PRODUCT_API_URL);
@@ -1848,8 +2044,7 @@
             if (!tbody) return;
             tbody.innerHTML = '';
 
-            const searchTerm = (document.getElementById('global-search-input')?.value || '').toLowerCase().trim();
-
+            const searchTerm = getActiveSearchTerm();
             let filtered = rawProducts;
 
             if (currentCategoryFilter !== 'ALL') {
@@ -1865,14 +2060,14 @@
             }
 
             if (filtered.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:30px; color:#94a3b8;">No products found.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; padding:25px; color:#94a3b8;">No products found.</td></tr>';
                 return;
             }
 
             filtered.forEach(p => {
                 const firstImg = (p.images && p.images.length > 0) ? p.images[0] : '';
                 const imgHtml = firstImg 
-                    ? `<img src="${firstImg}" style="width:48px; height:48px; border-radius:8px; object-fit:cover; border:1px solid #e2e8f0;">` 
+                    ? `<img src="${firstImg}" style="width:44px; height:44px; border-radius:8px; object-fit:cover; border:1px solid #e2e8f0;">` 
                     : '<span style="color:#94a3b8; font-size:11px;">No photo</span>';
 
                 const specsCount = p.specs ? p.specs.length : 0;
@@ -1883,7 +2078,7 @@
                     <tr>
                         <td style="font-weight:700; color:#2563eb;">#${p.id}</td>
                         <td>${imgHtml}</td>
-                        <td style="font-weight:700; color:#0f172a; max-width:220px; white-space:normal;">${p.name}</td>
+                        <td style="font-weight:700; color:#0f172a; max-width:200px; white-space:normal;">${p.name}</td>
                         <td><span style="background:#f0fdf4; color:#15803d; padding:4px 10px; border-radius:6px; font-weight:700; font-size:11px;">${p.type || p.category_name || '-'}</span></td>
                         <td style="color:#64748b;">${p.cartName || p.cart_name || '-'}</td>
                         <td style="font-weight:800; color:#16a34a;">$${parseFloat(p.price || 0).toFixed(2)}</td>
@@ -1899,11 +2094,11 @@
         }
 
         async function deleteProductConfirm(productId, productName) {
-            if (!confirm(`Are you sure you want to DELETE "${productName}" from the store catalog?`)) return;
+            if (!confirm(`Are you sure you want to delete "${productName}"?`)) return;
 
             const pwd = prompt('Enter admin security password:');
             if (pwd !== '15102006') {
-                showToast('Incorrect password. Action aborted.', 'error');
+                showToast('Incorrect password. Action cancelled.', 'error');
                 return;
             }
 
@@ -1911,19 +2106,17 @@
                 const response = await fetch(`${PRODUCT_API_URL}/${productId}`, { method: 'DELETE' });
                 const result = await response.json();
                 if (result.status === 'success') {
-                    showToast(`Product "${productName}" removed from store!`, 'success');
+                    showToast(`Product deleted!`, 'success');
                     fetchProducts();
                 } else {
-                    showToast('Delete failed: ' + (result.message || ''), 'error');
+                    showToast('Delete failed', 'error');
                 }
             } catch (err) {
                 showToast('Error deleting product', 'error');
             }
         }
 
-        // ============================================================
-        // CATEGORIES LOGIC
-        // ============================================================
+        // Categories
         async function fetchCategories() {
             try {
                 const response = await fetch(CATEGORY_API_URL);
@@ -2021,7 +2214,7 @@
                 });
                 const result = await response.json();
                 if (result.status === 'success') {
-                    showToast(`Category "${name}" added!`, 'success');
+                    showToast(`Category "${name}" created!`, 'success');
                     closeCategoryModal();
                     await fetchCategories();
                     const select = document.getElementById('prod-category');
@@ -2078,9 +2271,7 @@
             }
         }
 
-        // ============================================================
-        // USERS / CUSTOMERS
-        // ============================================================
+        // Users
         async function fetchUsers() {
             try {
                 const response = await fetch(USER_API_URL);
@@ -2099,8 +2290,7 @@
             if (!tbody) return;
             tbody.innerHTML = '';
 
-            const searchTerm = (document.getElementById('global-search-input')?.value || '').toLowerCase().trim();
-
+            const searchTerm = getActiveSearchTerm();
             let filtered = rawUsers.slice().reverse();
 
             if (searchTerm && currentSection === 'users') {
@@ -2128,9 +2318,7 @@
             });
         }
 
-        // ============================================================
-        // ADD PRODUCT STUDIO FORM LOGIC
-        // ============================================================
+        // Studio Add Product
         document.getElementById('prod-cart-name').addEventListener('input', function() {
             cartNameManuallyEdited = (this.value.trim().length > 0);
         });
@@ -2154,13 +2342,13 @@
             const colorCode = picker ? picker.value : '#000000';
 
             if (!colorName) {
-                showToast('Please type a color name (e.g. Black, White, Red)', 'info');
+                showToast('Please type a color name', 'info');
                 if (nameInput) nameInput.focus();
                 return;
             }
 
             if (selectedColors.some(c => c.name.toLowerCase() === colorName.toLowerCase())) {
-                showToast('This color variation is already added', 'info');
+                showToast('Color variation already added', 'info');
                 return;
             }
 
@@ -2260,7 +2448,7 @@
             const specsRaw = document.getElementById('prod-specs').value;
 
             if (!name || !categoryId || !price) {
-                showToast('Please fill in all required fields (*)', 'error');
+                showToast('Please fill all required fields (*)', 'error');
                 return;
             }
 
@@ -2296,7 +2484,7 @@
                 const result = await response.json();
 
                 if (result.status === 'success') {
-                    showToast('🎉 Product successfully published to store!', 'success');
+                    showToast('🎉 Product published to store!', 'success');
                     document.getElementById('studio-product-form').reset();
                     selectedPhotos = [];
                     selectedColors = [];
@@ -2316,16 +2504,18 @@
             }
         }
 
-        // ============================================================
-        // GLOBAL SEARCH HANDLER
-        // ============================================================
         function handleTableSearch(term) {
+            // Keep desktop and mobile search inputs in sync
+            const searchDesktop = document.getElementById('global-search-input');
+            const searchMobile = document.getElementById('mobile-search-input');
+            if (searchDesktop && searchDesktop.value !== term) searchDesktop.value = term;
+            if (searchMobile && searchMobile.value !== term) searchMobile.value = term;
+
             if (currentSection === 'orders') renderOrdersTable();
             if (currentSection === 'products') renderProductsTable();
             if (currentSection === 'users') renderUsersTable();
         }
 
-        // Initialize on load
         window.addEventListener('DOMContentLoaded', () => {
             fetchAllData();
         });
