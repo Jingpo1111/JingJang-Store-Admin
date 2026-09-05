@@ -1676,6 +1676,13 @@
 
         let rawOrders = [];
         let rawProducts = [];
+        try {
+            const cachedAdminProds = localStorage.getItem('jj_admin_raw_products');
+            if (cachedAdminProds) {
+                const parsed = JSON.parse(cachedAdminProds);
+                if (Array.isArray(parsed) && parsed.length > 0) rawProducts = parsed;
+            }
+        } catch(e) {}
         let rawUsers = [];
         let rawCategories = [];
         let currentSection = 'overview';
@@ -2025,12 +2032,30 @@
             try {
                 const response = await fetch(PRODUCT_API_URL);
                 const result = await response.json();
-                rawProducts = result.data || [];
+                const newProducts = result.data || [];
+                const oldJson = JSON.stringify(rawProducts);
+                const newJson = JSON.stringify(newProducts);
+                const tbody = document.getElementById('products-tbody');
+                const hasRows = tbody && tbody.children.length > 0 && !tbody.innerHTML.includes('No products found');
+
+                rawProducts = newProducts;
+                try {
+                    localStorage.setItem('jj_admin_raw_products', newJson);
+                } catch(e) {}
+
+                // If unchanged and rows are already populated, keep table intact without flicker
+                if (oldJson === newJson && hasRows) {
+                    updateKPIs();
+                    return;
+                }
+
                 renderProductsTable();
                 updateKPIs();
             } catch (err) {
                 console.error('Error fetching products:', err);
-                document.getElementById('products-tbody').innerHTML = '<tr><td colspan="10" style="text-align:center; color:red;">Failed to connect to products API</td></tr>';
+                if (rawProducts.length === 0) {
+                    document.getElementById('products-tbody').innerHTML = '<tr><td colspan="10" style="text-align:center; color:red;">Failed to connect to products API</td></tr>';
+                }
             }
         }
 
@@ -2107,6 +2132,7 @@
                 const result = await response.json();
                 if (result.status === 'success') {
                     showToast(`Product deleted!`, 'success');
+                    try { localStorage.removeItem('jj_cached_products'); localStorage.removeItem('jj_admin_raw_products'); } catch(e) {}
                     fetchProducts();
                 } else {
                     showToast('Delete failed', 'error');
@@ -2485,6 +2511,7 @@
 
                 if (result.status === 'success') {
                     showToast('🎉 Product published to store!', 'success');
+                    try { localStorage.removeItem('jj_cached_products'); localStorage.removeItem('jj_admin_raw_products'); } catch(e) {}
                     document.getElementById('studio-product-form').reset();
                     selectedPhotos = [];
                     selectedColors = [];
