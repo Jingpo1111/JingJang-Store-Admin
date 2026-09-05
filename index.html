@@ -2036,15 +2036,15 @@
                 const oldJson = JSON.stringify(rawProducts);
                 const newJson = JSON.stringify(newProducts);
                 const tbody = document.getElementById('products-tbody');
-                const hasRows = tbody && tbody.children.length > 0 && !tbody.innerHTML.includes('No products found');
+                const isAlreadyRendered = tbody && tbody.querySelector('tr[data-product-id]') && !tbody.innerHTML.includes('Loading products catalog');
 
                 rawProducts = newProducts;
                 try {
                     localStorage.setItem('jj_admin_raw_products', newJson);
                 } catch(e) {}
 
-                // If unchanged and rows are already populated, keep table intact without flicker
-                if (oldJson === newJson && hasRows) {
+                // If unchanged and real product rows are already populated, keep table intact without flicker
+                if (oldJson === newJson && isAlreadyRendered) {
                     updateKPIs();
                     return;
                 }
@@ -2100,7 +2100,7 @@
                 const dateStr = p.created_at ? new Date(p.created_at).toLocaleDateString() : '-';
 
                 tbody.innerHTML += `
-                    <tr>
+                    <tr data-product-id="${p.id}">
                         <td style="font-weight:700; color:#2563eb;">#${p.id}</td>
                         <td>${imgHtml}</td>
                         <td style="font-weight:700; color:#0f172a; max-width:200px; white-space:normal;">${p.name}</td>
@@ -2544,6 +2544,9 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
+            if (rawProducts.length > 0) {
+                renderProductsTable();
+            }
             fetchAllData();
         });
     </script>
