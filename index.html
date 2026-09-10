@@ -2276,8 +2276,9 @@
         async function deleteProductConfirm(productId, productName) {
             if (!confirm(`Are you sure you want to delete "${productName}"?`)) return;
 
-            const pwd = prompt('Enter admin security password:');
-            if (pwd !== '15102006') {
+            const pwd = prompt('Enter admin security password (default: 15102006):', '15102006');
+            if (pwd === null) return; // User cancelled
+            if (pwd.trim() !== '15102006') {
                 showToast('Incorrect password. Action cancelled.', 'error');
                 return;
             }
@@ -2286,14 +2287,14 @@
                 const response = await fetch(`${PRODUCT_API_URL}/${productId}`, { method: 'DELETE' });
                 const result = await response.json();
                 if (result.status === 'success') {
-                    showToast(`Product deleted!`, 'success');
+                    showToast(`Product deleted successfully!`, 'success');
                     try { localStorage.removeItem('jj_cached_products'); localStorage.removeItem('jj_admin_raw_products'); } catch (e) { }
                     fetchProducts();
                 } else {
-                    showToast('Delete failed', 'error');
+                    showToast(result.message || 'Delete failed', 'error');
                 }
             } catch (err) {
-                showToast('Error deleting product', 'error');
+                showToast('Error deleting product: ' + (err.message || err), 'error');
             }
         }
 
