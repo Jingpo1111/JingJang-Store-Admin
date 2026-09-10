@@ -3,9 +3,10 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>JingJang Store — Modern Admin Portal</title>
-    <link rel="icon" type="image/png" href="img/IMG_3840.PNG">
+    <link rel="icon" type="image/png" href="https://res.cloudinary.com/k9ybxprb/image/upload/v1788942089/IMG_3840.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -124,8 +125,15 @@
         }
 
         @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.4; }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.4;
+            }
         }
 
         .btn-sidebar-close {
@@ -427,10 +435,21 @@
             height: 100%;
         }
 
-        .kpi-card.kpi-orders::after { background-color: #3b82f6; }
-        .kpi-card.kpi-revenue::after { background-color: #10b981; }
-        .kpi-card.kpi-products::after { background-color: #8b5cf6; }
-        .kpi-card.kpi-users::after { background-color: #f59e0b; }
+        .kpi-card.kpi-orders::after {
+            background-color: #3b82f6;
+        }
+
+        .kpi-card.kpi-revenue::after {
+            background-color: #10b981;
+        }
+
+        .kpi-card.kpi-products::after {
+            background-color: #8b5cf6;
+        }
+
+        .kpi-card.kpi-users::after {
+            background-color: #f59e0b;
+        }
 
         .kpi-info h4 {
             font-size: 11px;
@@ -465,10 +484,25 @@
             flex-shrink: 0;
         }
 
-        .icon-orders { background: #eff6ff; color: #3b82f6; }
-        .icon-revenue { background: #ecfdf5; color: #10b981; }
-        .icon-products { background: #f5f3ff; color: #8b5cf6; }
-        .icon-users { background: #fffbeb; color: #f59e0b; }
+        .icon-orders {
+            background: #eff6ff;
+            color: #3b82f6;
+        }
+
+        .icon-revenue {
+            background: #ecfdf5;
+            color: #10b981;
+        }
+
+        .icon-products {
+            background: #f5f3ff;
+            color: #8b5cf6;
+        }
+
+        .icon-users {
+            background: #fffbeb;
+            color: #f59e0b;
+        }
 
         /* ============================================================
            SECTIONS (TAB PANELS)
@@ -483,8 +517,15 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(4px); }
-            to { opacity: 1; transform: translateY(0); }
+            from {
+                opacity: 0;
+                transform: translateY(4px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Filter Pills Row (Horizontally scrollable on mobile) */
@@ -620,13 +661,47 @@
             min-height: 34px;
         }
 
-        .status-Pending { background: #fff7ed; color: #c2410c; border-color: #fed7aa; }
-        .status-ConfirmOrder { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
-        .status-Ordered { background: #faf5ff; color: #7e22ce; border-color: #e9d5ff; }
-        .status-InChina { background: #ecfdf5; color: #047857; border-color: #a7f3d0; }
-        .status-ArrivedKhmer { background: #f0fdf4; color: #15803d; border-color: #bbf7d0; }
-        .status-WillBeSend { background: #fefce8; color: #a16207; border-color: #fef08a; }
-        .status-Cancelled { background: #fef2f2; color: #b91c1c; border-color: #fecaca; }
+        .status-Pending {
+            background: #fff7ed;
+            color: #c2410c;
+            border-color: #fed7aa;
+        }
+
+        .status-ConfirmOrder {
+            background: #eff6ff;
+            color: #1d4ed8;
+            border-color: #bfdbfe;
+        }
+
+        .status-Ordered {
+            background: #faf5ff;
+            color: #7e22ce;
+            border-color: #e9d5ff;
+        }
+
+        .status-InChina {
+            background: #ecfdf5;
+            color: #047857;
+            border-color: #a7f3d0;
+        }
+
+        .status-ArrivedKhmer {
+            background: #f0fdf4;
+            color: #15803d;
+            border-color: #bbf7d0;
+        }
+
+        .status-WillBeSend {
+            background: #fefce8;
+            color: #a16207;
+            border-color: #fef08a;
+        }
+
+        .status-Cancelled {
+            background: #fef2f2;
+            color: #b91c1c;
+            border-color: #fecaca;
+        }
 
         .btn-delete-sm {
             background: #fee2e2;
@@ -1055,13 +1130,28 @@
         }
 
         @keyframes slideUp {
-            from { transform: translateY(100%); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+            from {
+                transform: translateY(100%);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
 
-        .toast.success { background: #10b981; }
-        .toast.error { background: #ef4444; }
-        .toast.info { background: #2563eb; }
+        .toast.success {
+            background: #10b981;
+        }
+
+        .toast.error {
+            background: #ef4444;
+        }
+
+        .toast.info {
+            background: #2563eb;
+        }
 
         /* ============================================================
            SPECIFIC RESPONSIVE OPTIMIZATIONS (IPHONE 16 PRO & MOBILE)
@@ -1097,7 +1187,8 @@
             }
 
             .search-box {
-                display: none; /* Replaced by full-width mobile search input */
+                display: none;
+                /* Replaced by full-width mobile search input */
             }
 
             .mobile-search-bar {
@@ -1166,7 +1257,8 @@
             }
 
             .field-input {
-                font-size: 16px; /* Prevents iOS safari zoom */
+                font-size: 16px;
+                /* Prevents iOS safari zoom */
             }
 
             .color-selector-row {
@@ -1207,7 +1299,9 @@
     <aside class="sidebar" id="admin-sidebar">
         <div class="sidebar-brand">
             <div class="brand-content">
-                <img src="img/IMG_3840.PNG" alt="JingJang Logo" class="brand-logo" onerror="this.src='https://res.cloudinary.com/k9ybxprb/image/upload/v1788604967/jingjang_store/test/gmyuomzy63zcjboetzh3.png'">
+                <img src="https://res.cloudinary.com/k9ybxprb/image/upload/v1788942089/IMG_3840.png" alt="JingJang Logo"
+                    class="brand-logo"
+                    onerror="this.src='https://res.cloudinary.com/k9ybxprb/image/upload/v1788604967/jingjang_store/test/gmyuomzy63zcjboetzh3.png'">
                 <div class="brand-info">
                     <h1>JingJang Admin</h1>
                     <div class="brand-status">
@@ -1216,12 +1310,13 @@
                     </div>
                 </div>
             </div>
-            <button type="button" class="btn-sidebar-close" onclick="toggleMobileSidebar()" aria-label="Close Sidebar">&times;</button>
+            <button type="button" class="btn-sidebar-close" onclick="toggleMobileSidebar()"
+                aria-label="Close Sidebar">&times;</button>
         </div>
 
         <nav class="sidebar-menu">
             <div class="menu-label">Main Navigation</div>
-            
+
             <a class="nav-item active" id="nav-overview" onclick="switchSection('overview')">
                 <div class="nav-left">
                     <span class="nav-icon">📊</span>
@@ -1292,7 +1387,8 @@
             <div class="topbar-right">
                 <div class="search-box">
                     <span class="search-icon">🔍</span>
-                    <input type="text" id="global-search-input" placeholder="Quick search..." oninput="handleTableSearch(this.value)">
+                    <input type="text" id="global-search-input" placeholder="Quick search..."
+                        oninput="handleTableSearch(this.value)">
                 </div>
                 <button class="btn-refresh" onclick="refreshCurrentSection()" title="Reload data">
                     <span>🔄</span>
@@ -1305,7 +1401,8 @@
         <div class="mobile-search-bar">
             <div class="search-box">
                 <span class="search-icon">🔍</span>
-                <input type="text" id="mobile-search-input" placeholder="Search orders, products, users..." oninput="handleTableSearch(this.value)">
+                <input type="text" id="mobile-search-input" placeholder="Search orders, products, users..."
+                    oninput="handleTableSearch(this.value)">
             </div>
         </div>
 
@@ -1375,7 +1472,8 @@
                             </thead>
                             <tbody id="overview-orders-tbody">
                                 <tr>
-                                    <td colspan="7" style="text-align:center; padding: 25px;">Loading latest orders...</td>
+                                    <td colspan="7" style="text-align:center; padding: 25px;">Loading latest orders...
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1394,8 +1492,10 @@
                         <button class="status-pill" onclick="filterOrdersByStatus('Confirm order')">Confirmed</button>
                         <button class="status-pill" onclick="filterOrdersByStatus('Ordered')">Ordered</button>
                         <button class="status-pill" onclick="filterOrdersByStatus('In China')">In China</button>
-                        <button class="status-pill" onclick="filterOrdersByStatus('Arrived Khmer')">Arrived Khmer</button>
-                        <button class="status-pill" onclick="filterOrdersByStatus('Will be send to you')">Will Send</button>
+                        <button class="status-pill" onclick="filterOrdersByStatus('Arrived Khmer')">Arrived
+                            Khmer</button>
+                        <button class="status-pill" onclick="filterOrdersByStatus('Will be send to you')">Will
+                            Send</button>
                         <button class="status-pill" onclick="filterOrdersByStatus('Cancelled')">Cancelled</button>
                     </div>
                     <div style="font-size: 12px; color: #64748b; font-weight: 600;" id="orders-count-indicator">
@@ -1422,7 +1522,8 @@
                             </thead>
                             <tbody id="orders-tbody">
                                 <tr>
-                                    <td colspan="10" style="text-align:center; padding: 30px;">Loading orders database...</td>
+                                    <td colspan="10" style="text-align:center; padding: 30px;">Loading orders
+                                        database...</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1437,7 +1538,9 @@
                 <div class="filters-toolbar">
                     <div style="display:flex; align-items:center; gap: 8px;">
                         <span style="font-size: 13px; font-weight: 600; color: #475569;">Filter:</span>
-                        <select id="products-cat-filter" class="field-input" style="width: auto; padding: 6px 10px; font-size: 13px; min-height: 36px;" onchange="filterProductsByCategory(this.value)">
+                        <select id="products-cat-filter" class="field-input"
+                            style="width: auto; padding: 6px 10px; font-size: 13px; min-height: 36px;"
+                            onchange="filterProductsByCategory(this.value)">
                             <option value="ALL">All Categories</option>
                         </select>
                     </div>
@@ -1463,7 +1566,8 @@
                             </thead>
                             <tbody id="products-tbody">
                                 <tr>
-                                    <td colspan="10" style="text-align:center; padding: 30px;">Loading products catalog...</td>
+                                    <td colspan="10" style="text-align:center; padding: 30px;">Loading products
+                                        catalog...</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1477,7 +1581,7 @@
             <section id="sec-add-product" class="section-view">
                 <form id="studio-product-form" onsubmit="handleProductSubmit(event)">
                     <div class="add-product-studio">
-                        
+
                         <!-- Left Column: Details -->
                         <div class="form-card">
                             <h3 class="form-card-title">📝 Product Information</h3>
@@ -1485,7 +1589,9 @@
                             <!-- Product Name -->
                             <div class="field-group">
                                 <label class="field-label" for="prod-name">Product Name *</label>
-                                <input type="text" id="prod-name" class="field-input" placeholder="e.g. Acer OMR228 Wireless Mouse" required oninput="handleNameInput(this.value)">
+                                <input type="text" id="prod-name" class="field-input"
+                                    placeholder="e.g. Acer OMR228 Wireless Mouse" required
+                                    oninput="handleNameInput(this.value)">
                                 <div class="field-hint">The main title displayed on store product cards.</div>
                             </div>
 
@@ -1496,7 +1602,8 @@
                                     <select id="prod-category" class="field-input" required>
                                         <option value="">Select a category</option>
                                     </select>
-                                    <button type="button" class="btn-blue-action" onclick="openCategoryModal()">+ New</button>
+                                    <button type="button" class="btn-blue-action" onclick="openCategoryModal()">+
+                                        New</button>
                                 </div>
                                 <div class="field-hint">Select existing or click + New to create instantly.</div>
                             </div>
@@ -1504,27 +1611,31 @@
                             <!-- Cart Name -->
                             <div class="field-group">
                                 <label class="field-label" for="prod-cart-name">Cart Name</label>
-                                <input type="text" id="prod-cart-name" class="field-input" placeholder="Short clean name for checkout & receipt">
+                                <input type="text" id="prod-cart-name" class="field-input"
+                                    placeholder="Short clean name for checkout & receipt">
                                 <div class="field-hint">Auto-fills from Product Name if left blank.</div>
                             </div>
 
                             <!-- Price -->
                             <div class="field-group">
                                 <label class="field-label" for="prod-price">Price ($ USD) *</label>
-                                <input type="number" id="prod-price" class="field-input" step="0.01" min="0" placeholder="e.g. 19.99" required>
+                                <input type="number" id="prod-price" class="field-input" step="0.01" min="0"
+                                    placeholder="e.g. 19.99" required>
                             </div>
 
                             <!-- Color Group Name -->
                             <div class="field-group">
                                 <label class="field-label" for="prod-color-name">Color Group Identifier</label>
-                                <input type="text" id="prod-color-name" class="field-input" placeholder="e.g. color_aceromr228">
+                                <input type="text" id="prod-color-name" class="field-input"
+                                    placeholder="e.g. color_aceromr228">
                                 <div class="field-hint">Auto-generated slug for radio selection.</div>
                             </div>
 
                             <!-- Specs -->
                             <div class="field-group">
                                 <label class="field-label" for="prod-specs">Specifications (one per line)</label>
-                                <textarea id="prod-specs" class="field-input field-textarea" placeholder="Support: Computer, Android&#10;Connectivity: Bluetooth, Type-C, USB-2.4G"></textarea>
+                                <textarea id="prod-specs" class="field-input field-textarea"
+                                    placeholder="Support: Computer, Android&#10;Connectivity: Bluetooth, Type-C, USB-2.4G"></textarea>
                                 <div class="field-hint">Each line will become a bullet point in the specs list.</div>
                             </div>
                         </div>
@@ -1537,8 +1648,11 @@
                             <div class="field-group">
                                 <label class="field-label">Add Available Colors</label>
                                 <div class="color-selector-row">
-                                    <input type="text" id="color-name-input" class="field-input" placeholder="Color name (e.g. Black)" onkeydown="if(event.key==='Enter'){event.preventDefault();addColorChip();}">
-                                    <input type="color" id="color-picker-input" class="color-box-picker" value="#1a1a1a" title="Pick swatch color">
+                                    <input type="text" id="color-name-input" class="field-input"
+                                        placeholder="Color name (e.g. Black)"
+                                        onkeydown="if(event.key==='Enter'){event.preventDefault();addColorChip();}">
+                                    <input type="color" id="color-picker-input" class="color-box-picker" value="#1a1a1a"
+                                        title="Pick swatch color">
                                     <button type="button" class="btn-blue-action" onclick="addColorChip()">Add</button>
                                 </div>
                                 <div id="color-chips-container" class="chips-flow-container"></div>
@@ -1548,12 +1662,14 @@
                             <!-- Photo Upload -->
                             <div class="field-group" style="margin-top: 22px;">
                                 <label class="field-label">Product Photos (Cloudinary Upload)</label>
-                                <div class="photo-dropzone" onclick="document.getElementById('prod-photos-input').click()">
+                                <div class="photo-dropzone"
+                                    onclick="document.getElementById('prod-photos-input').click()">
                                     <div class="dropzone-icon">📸</div>
                                     <div class="dropzone-text">Tap or drag photos here to upload</div>
                                     <div class="dropzone-subtext">PNG, JPG, WEBP (Multiple allowed)</div>
                                 </div>
-                                <input type="file" id="prod-photos-input" multiple accept="image/*" style="display:none;" onchange="handlePhotosSelected(this)">
+                                <input type="file" id="prod-photos-input" multiple accept="image/*"
+                                    style="display:none;" onchange="handlePhotosSelected(this)">
                                 <div id="photo-thumbnails-grid" class="thumbnails-flow-grid"></div>
                             </div>
 
@@ -1576,8 +1692,10 @@
                     <div class="table-header-box">
                         <h3>🏷️ Store Categories</h3>
                         <div class="input-row-flex" style="width: 100%; max-width: 350px;">
-                            <input type="text" id="quick-add-cat-name" class="field-input" placeholder="New category name" style="min-height: 40px;">
-                            <button class="btn-blue-action" style="min-height: 40px;" onclick="addQuickCategory()">+ Add</button>
+                            <input type="text" id="quick-add-cat-name" class="field-input"
+                                placeholder="New category name" style="min-height: 40px;">
+                            <button class="btn-blue-action" style="min-height: 40px;" onclick="addQuickCategory()">+
+                                Add</button>
                         </div>
                     </div>
                     <div class="table-wrapper">
@@ -1619,7 +1737,8 @@
                             </thead>
                             <tbody id="users-tbody">
                                 <tr>
-                                    <td colspan="4" style="text-align:center; padding: 30px;">Loading customer accounts...</td>
+                                    <td colspan="4" style="text-align:center; padding: 30px;">Loading customer
+                                        accounts...</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1633,12 +1752,15 @@
     <!-- ============================================================
          MODAL: CREATE NEW CATEGORY
     ============================================================ -->
-    <div id="category-modal" class="modal-overlay" style="display: none;" onclick="if(event.target===this)closeCategoryModal()">
+    <div id="category-modal" class="modal-overlay" style="display: none;"
+        onclick="if(event.target===this)closeCategoryModal()">
         <div class="modal-card">
             <h3>🏷️ Create New Category</h3>
             <div class="field-group">
                 <label class="field-label" for="modal-cat-name-input">Category Name</label>
-                <input type="text" id="modal-cat-name-input" class="field-input" placeholder="e.g. Phone, Monitor, Headset" onkeydown="if(event.key==='Enter'){event.preventDefault();saveNewCategory();}">
+                <input type="text" id="modal-cat-name-input" class="field-input"
+                    placeholder="e.g. Phone, Monitor, Headset"
+                    onkeydown="if(event.key==='Enter'){event.preventDefault();saveNewCategory();}">
             </div>
             <div class="modal-actions">
                 <button type="button" class="btn-modal-cancel" onclick="closeCategoryModal()">Cancel</button>
@@ -1650,13 +1772,16 @@
     <!-- ============================================================
          MODAL: RECEIPT LIGHTBOX
     ============================================================ -->
-    <div id="receipt-modal" class="modal-overlay" style="display: none;" onclick="if(event.target===this)closeReceiptModal()">
+    <div id="receipt-modal" class="modal-overlay" style="display: none;"
+        onclick="if(event.target===this)closeReceiptModal()">
         <div class="modal-card" style="max-width: 600px; text-align: center;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
                 <h3 style="margin:0;">🧾 Payment Receipt</h3>
-                <button type="button" onclick="closeReceiptModal()" style="border:none; background:none; font-size:24px; cursor:pointer; color:#64748b; padding:4px 8px;">&times;</button>
+                <button type="button" onclick="closeReceiptModal()"
+                    style="border:none; background:none; font-size:24px; cursor:pointer; color:#64748b; padding:4px 8px;">&times;</button>
             </div>
-            <div id="receipt-modal-content" style="max-height: 65vh; overflow-y:auto; display:flex; justify-content:center;">
+            <div id="receipt-modal-content"
+                style="max-height: 65vh; overflow-y:auto; display:flex; justify-content:center;">
                 <!-- Receipt image rendered here -->
             </div>
         </div>
@@ -1682,7 +1807,7 @@
                 const parsed = JSON.parse(cachedAdminProds);
                 if (Array.isArray(parsed) && parsed.length > 0) rawProducts = parsed;
             }
-        } catch(e) {}
+        } catch (e) { }
         let rawUsers = [];
         let rawCategories = [];
         let currentSection = 'overview';
@@ -1861,7 +1986,7 @@
             }
 
             if (searchTerm && currentSection === 'orders') {
-                filtered = filtered.filter(o => 
+                filtered = filtered.filter(o =>
                     (o.orderId || '').toLowerCase().includes(searchTerm) ||
                     (o.name || '').toLowerCase().includes(searchTerm) ||
                     (o.phone || '').toLowerCase().includes(searchTerm) ||
@@ -2041,7 +2166,7 @@
                 rawProducts = newProducts;
                 try {
                     localStorage.setItem('jj_admin_raw_products', newJson);
-                } catch(e) {}
+                } catch (e) { }
 
                 // If unchanged and real product rows are already populated, keep table intact without flicker
                 if (oldJson === newJson && isAlreadyRendered) {
@@ -2077,7 +2202,7 @@
             }
 
             if (searchTerm && currentSection === 'products') {
-                filtered = filtered.filter(p => 
+                filtered = filtered.filter(p =>
                     (p.name || '').toLowerCase().includes(searchTerm) ||
                     (p.cartName || p.cart_name || '').toLowerCase().includes(searchTerm) ||
                     (p.type || p.category_name || '').toLowerCase().includes(searchTerm)
@@ -2091,8 +2216,8 @@
 
             filtered.forEach(p => {
                 const firstImg = (p.images && p.images.length > 0) ? p.images[0] : '';
-                const imgHtml = firstImg 
-                    ? `<img src="${firstImg}" style="width:44px; height:44px; border-radius:8px; object-fit:cover; border:1px solid #e2e8f0;">` 
+                const imgHtml = firstImg
+                    ? `<img src="${firstImg}" style="width:44px; height:44px; border-radius:8px; object-fit:cover; border:1px solid #e2e8f0;">`
                     : '<span style="color:#94a3b8; font-size:11px;">No photo</span>';
 
                 const specsCount = p.specs ? p.specs.length : 0;
@@ -2132,7 +2257,7 @@
                 const result = await response.json();
                 if (result.status === 'success') {
                     showToast(`Product deleted!`, 'success');
-                    try { localStorage.removeItem('jj_cached_products'); localStorage.removeItem('jj_admin_raw_products'); } catch(e) {}
+                    try { localStorage.removeItem('jj_cached_products'); localStorage.removeItem('jj_admin_raw_products'); } catch (e) { }
                     fetchProducts();
                 } else {
                     showToast('Delete failed', 'error');
@@ -2320,7 +2445,7 @@
             let filtered = rawUsers.slice().reverse();
 
             if (searchTerm && currentSection === 'users') {
-                filtered = filtered.filter(u => 
+                filtered = filtered.filter(u =>
                     (u.userId || '').toLowerCase().includes(searchTerm) ||
                     (u.username || '').toLowerCase().includes(searchTerm) ||
                     (u.email || '').toLowerCase().includes(searchTerm)
@@ -2345,7 +2470,7 @@
         }
 
         // Studio Add Product
-        document.getElementById('prod-cart-name').addEventListener('input', function() {
+        document.getElementById('prod-cart-name').addEventListener('input', function () {
             cartNameManuallyEdited = (this.value.trim().length > 0);
         });
 
@@ -2511,7 +2636,7 @@
 
                 if (result.status === 'success') {
                     showToast('🎉 Product published to store!', 'success');
-                    try { localStorage.removeItem('jj_cached_products'); localStorage.removeItem('jj_admin_raw_products'); } catch(e) {}
+                    try { localStorage.removeItem('jj_cached_products'); localStorage.removeItem('jj_admin_raw_products'); } catch (e) { }
                     document.getElementById('studio-product-form').reset();
                     selectedPhotos = [];
                     selectedColors = [];
