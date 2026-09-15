@@ -624,7 +624,10 @@ function closeCategoryModal() {
     if (modal) modal.style.display = 'none';
 }
 
+let isSubmittingCategory = false;
+
 async function saveNewCategory() {
+    if (isSubmittingCategory) return;
     const input = document.getElementById('modal-cat-name-input');
     const name = (input ? input.value : '').trim();
     if (!name) {
@@ -632,6 +635,7 @@ async function saveNewCategory() {
         return;
     }
 
+    isSubmittingCategory = true;
     try {
         const response = await fetch(CATEGORY_API_URL, {
             method: 'POST',
@@ -650,10 +654,13 @@ async function saveNewCategory() {
         }
     } catch (err) {
         showToast('Error saving category', 'error');
+    } finally {
+        isSubmittingCategory = false;
     }
 }
 
 async function addQuickCategory() {
+    if (isSubmittingCategory) return;
     const input = document.getElementById('quick-add-cat-name');
     const name = (input ? input.value : '').trim();
     if (!name) {
@@ -661,6 +668,7 @@ async function addQuickCategory() {
         return;
     }
 
+    isSubmittingCategory = true;
     try {
         const response = await fetch(CATEGORY_API_URL, {
             method: 'POST',
@@ -677,6 +685,8 @@ async function addQuickCategory() {
         }
     } catch (err) {
         showToast('Error saving category', 'error');
+    } finally {
+        isSubmittingCategory = false;
     }
 }
 
@@ -894,8 +904,11 @@ function resetAdminOptionRows() {
     }
 }
 
+let isSubmittingProduct = false;
+
 async function handleProductSubmit(e) {
     e.preventDefault();
+    if (isSubmittingProduct) return;
 
     const name = document.getElementById('prod-name').value.trim();
     const catSelect = document.getElementById('prod-category');
@@ -915,6 +928,7 @@ async function handleProductSubmit(e) {
         if (!confirm('No photos uploaded. Publish product without images?')) return;
     }
 
+    isSubmittingProduct = true;
     const submitBtn = document.getElementById('btn-publish-product');
     submitBtn.disabled = true;
     submitBtn.innerHTML = '<span>⏳</span><span>Uploading to Cloudinary & Saving...</span>';
@@ -980,8 +994,9 @@ async function handleProductSubmit(e) {
         }
     } catch (err) {
         console.error('Error submitting product:', err);
-        showToast('Network error uploading product', 'error');
+        showToast('Network error uploading product. Wait a moment and refresh.', 'error');
     } finally {
+        isSubmittingProduct = false;
         submitBtn.disabled = false;
         submitBtn.innerHTML = '<span>🚀</span><span>Publish Product to Store</span>';
     }
@@ -1204,9 +1219,11 @@ function removeEditOptionRow(btn) {
     }
 }
 
+let isEditingProduct = false;
+
 async function handleEditProductSubmit(e) {
     e.preventDefault();
-    if (!editingProductId) return;
+    if (!editingProductId || isEditingProduct) return;
 
     const name = document.getElementById('edit-prod-name').value.trim();
     const catSelect = document.getElementById('edit-prod-category');
@@ -1222,6 +1239,7 @@ async function handleEditProductSubmit(e) {
         return;
     }
 
+    isEditingProduct = true;
     const saveBtn = document.getElementById('btn-save-edit-product');
     saveBtn.disabled = true;
     saveBtn.innerHTML = '<span>⏳</span><span>Saving Changes...</span>';
@@ -1282,8 +1300,9 @@ async function handleEditProductSubmit(e) {
         }
     } catch (err) {
         console.error('Error updating product:', err);
-        showToast('Network error updating product', 'error');
+        showToast('Network error updating product. Wait a moment and refresh.', 'error');
     } finally {
+        isEditingProduct = false;
         saveBtn.disabled = false;
         saveBtn.innerHTML = '<span>💾</span><span>Save Product Changes</span>';
     }
