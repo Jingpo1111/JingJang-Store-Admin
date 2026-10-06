@@ -310,8 +310,10 @@ function renderOrdersTable() {
         const safeNote = escapeHTML(order.note || '-');
         const safeAddress = escapeHTML(order.address || '-');
 
-        const mapLink = (order.address && order.address.startsWith('http'))
-            ? `<a href="${encodeURI(order.address)}" target="_blank" rel="noopener noreferrer" style="color:#2563eb; font-weight:600; text-decoration:none;">🗺️ Map</a>`
+        // Detect any URL in the address (handles 'http...', 'GPS: http...', etc.)
+        const urlMatch = (order.address || '').match(/(https?:\/\/[^\s]+)/);
+        const mapLink = urlMatch
+            ? `<a href="${encodeURI(urlMatch[1])}" target="_blank" rel="noopener noreferrer" style="color:#2563eb; font-weight:600; text-decoration:none;">🗺️ Map</a>`
             : safeAddress;
 
         const hasReceipt = (order.receipt && order.receipt !== 'No Receipt');
