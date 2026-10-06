@@ -37,6 +37,13 @@ window.fetch = function (url, options = {}) {
     } else {
         if (!options.headers['x-admin-key']) options.headers['x-admin-key'] = key;
     }
+
+    // Attach adminKey query param as fallback for reverse proxy / CORS compatibility
+    if (typeof url === 'string' && (url.startsWith(CONFIG.API_BASE) || url.startsWith('/')) && !url.includes('adminKey=')) {
+        const sep = url.includes('?') ? '&' : '?';
+        url = `${url}${sep}adminKey=${encodeURIComponent(key)}`;
+    }
+
     return originalFetch.call(this, url, options);
 };
 
@@ -217,6 +224,9 @@ async function fetchOrders() {
     try {
         const response = await fetch(ORDER_API_URL);
         const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result.message || `HTTP ${response.status}`);
+        }
         rawOrders = Array.isArray(result) ? result : (result.data || []);
         renderOrdersTable();
         renderOverviewRecentOrders();
@@ -224,7 +234,7 @@ async function fetchOrders() {
     } catch (err) {
         console.error('Error fetching orders:', err);
         const tbody = document.getElementById('orders-tbody');
-        if (tbody) tbody.innerHTML = '<tr><td colspan="10" style="text-align:center; color:red;">Failed to connect to orders API</td></tr>';
+        if (tbody) tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; color:red;">Failed to connect to orders API (${escapeHTML(err.message)})</td></tr>`;
     }
 }
 
@@ -765,13 +775,16 @@ async function fetchUsers() {
     try {
         const response = await fetch(USER_API_URL);
         const result = await response.json();
+        if (!response.ok) {
+            throw new Error(result.message || `HTTP ${response.status}`);
+        }
         rawUsers = result.users || [];
         renderUsersTable();
         updateKPIs();
     } catch (err) {
         console.error('Error fetching users:', err);
         const tbody = document.getElementById('users-tbody');
-        if (tbody) tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:red;">Failed to connect to users API</td></tr>';
+        if (tbody) tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:red;">Failed to connect to users API (${escapeHTML(err.message)})</td></tr>`;
     }
 }
 

@@ -5,5 +5,7 @@ const isLocal = window.location.hostname === 'localhost' ||
     window.location.protocol === 'file:';
 
 const CONFIG = {
-    API_BASE: isLocal ? 'http://localhost:3000' : 'https://api.jingjangstore.com'
+    API_BASE: (typeof window !== 'undefined' && window.localStorage && window.localStorage.getItem('jj_api_base'))
+        ? window.localStorage.getItem('jj_api_base')
+        : (isLocal ? 'http://localhost:3000' : 'https://api.jingjangstore.com')
 };
