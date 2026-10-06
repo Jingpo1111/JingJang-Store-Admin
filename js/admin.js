@@ -8,6 +8,37 @@ const USER_API_URL = CONFIG.API_BASE + '/user';
 const PRODUCT_API_URL = CONFIG.API_BASE + '/products';
 const CATEGORY_API_URL = CONFIG.API_BASE + '/categories';
 
+// ============================================================
+// Security: Safe HTML Escaping & Authorized Fetch Interceptor
+// ============================================================
+function escapeHTML(str) {
+    if (str === null || str === undefined) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+}
+
+function getAdminKey() {
+    return localStorage.getItem('jj_admin_key') || 'jj-admin-supersecret-2026';
+}
+
+const originalFetch = window.fetch;
+window.fetch = function (url, options = {}) {
+    options = options || {};
+    options.credentials = options.credentials || 'include';
+    options.headers = options.headers || {};
+    const key = getAdminKey();
+    if (typeof options.headers.set === 'function') {
+        if (!options.headers.has('x-admin-key')) options.headers.set('x-admin-key', key);
+    } else {
+        if (!options.headers['x-admin-key']) options.headers['x-admin-key'] = key;
+    }
+    return originalFetch.call(this, url, options);
+};
+
 let rawOrders = [];
 let rawProducts = [];
 try {
@@ -251,34 +282,43 @@ function renderOrdersTable() {
         if (order.items) {
             try {
                 const parsed = JSON.parse(order.items);
-                itemsSummary = parsed.map(it => `<div>• ${it.name} <strong>(x${it.quantity})</strong></div>`).join('');
+                itemsSummary = parsed.map(it => `<div>• ${escapeHTML(it.name)} <strong>(x${escapeHTML(it.quantity)})</strong></div>`).join('');
             } catch (e) {
-                itemsSummary = order.items;
+                itemsSummary = escapeHTML(order.items);
             }
         } else {
             itemsSummary = 'No items';
         }
 
-        const receiptBtn = (order.receipt && order.receipt !== 'No Receipt')
-            ? `<button class="btn-view-receipt" onclick="viewReceiptModal(\`${order.receipt}\`)">Receipt</button>`
-            : '<span style="color:#94a3b8; font-size:12px;">None</span>';
+        const safeOrderId = escapeHTML(order.orderId || '-');
+        const rawOrderId = (order.orderId || '').replace(/['"\\]/g, '');
+        const safeName = escapeHTML(order.name || '-');
+        const safePhone = escapeHTML(order.phone || '-');
+        const safeNote = escapeHTML(order.note || '-');
+        const safeAddress = escapeHTML(order.address || '-');
 
         const mapLink = (order.address && order.address.startsWith('http'))
-            ? `<a href="${order.address}" target="_blank" style="color:#2563eb; font-weight:600; text-decoration:none;">🗺️ Map</a>`
-            : (order.address || '-');
+            ? `<a href="${encodeURI(order.address)}" target="_blank" rel="noopener noreferrer" style="color:#2563eb; font-weight:600; text-decoration:none;">🗺️ Map</a>`
+            : safeAddress;
+
+        const hasReceipt = (order.receipt && order.receipt !== 'No Receipt');
+        const safeReceiptParam = hasReceipt ? encodeURI(order.receipt) : '';
+        const receiptBtn = hasReceipt
+            ? `<button class="btn-view-receipt" onclick="viewReceiptModal('${safeReceiptParam}')">Receipt</button>`
+            : '<span style="color:#94a3b8; font-size:12px;">None</span>';
 
         tbody.innerHTML += `
             <tr>
-                <td style="font-weight: 700; color: #2563eb;">${order.orderId || '-'}</td>
-                <td style="font-weight: 600;">${order.name || '-'}</td>
-                <td>${order.phone || '-'}</td>
+                <td style="font-weight: 700; color: #2563eb;">${safeOrderId}</td>
+                <td style="font-weight: 600;">${safeName}</td>
+                <td>${safePhone}</td>
                 <td style="max-width: 160px; word-break: break-all; font-size: 12px;">${mapLink}</td>
                 <td style="font-size: 12px; line-height: 1.4;">${itemsSummary}</td>
-                <td style="color: #ea580c; font-size: 12px;">${order.note || '-'}</td>
+                <td style="color: #ea580c; font-size: 12px;">${safeNote}</td>
                 <td style="font-weight: 800; color: #16a34a;">$${parseFloat(order.total || 0).toFixed(2)}</td>
                 <td>${receiptBtn}</td>
                 <td>
-                    <select class="status-select ${statusClass}" onchange="changeOrderStatus('${order.orderId}', this.value)">
+                    <select class="status-select ${statusClass}" onchange="changeOrderStatus('${rawOrderId}', this.value)">
                         <option value="Pending" ${statusVal === 'Pending' ? 'selected' : ''}>Pending</option>
                         <option value="Confirm order" ${statusVal === 'Confirm order' ? 'selected' : ''}>Confirm order</option>
                         <option value="Ordered" ${statusVal === 'Ordered' ? 'selected' : ''}>Ordered</option>
@@ -289,7 +329,7 @@ function renderOrdersTable() {
                     </select>
                 </td>
                 <td>
-                    <button class="btn-delete-sm" onclick="deleteOrderConfirm('${order.orderId}')">Delete</button>
+                    <button class="btn-delete-sm" onclick="deleteOrderConfirm('${rawOrderId}')">Delete</button>
                 </td>
             </tr>
         `;
@@ -314,19 +354,24 @@ function renderOverviewRecentOrders() {
         if (statusVal === 'Arrived Khmer') statusClass = 'status-ArrivedKhmer';
         if (statusVal === 'Cancelled') statusClass = 'status-Cancelled';
 
-        const receiptBtn = (order.receipt && order.receipt !== 'No Receipt')
-            ? `<button class="btn-view-receipt" onclick="viewReceiptModal(\`${order.receipt}\`)">Receipt</button>`
+        const safeOrderId = escapeHTML(order.orderId || '-');
+        const safeName = escapeHTML(order.name || '-');
+        const safePhone = escapeHTML(order.phone || '-');
+        const hasReceipt = (order.receipt && order.receipt !== 'No Receipt');
+        const safeReceiptParam = hasReceipt ? encodeURI(order.receipt) : '';
+        const receiptBtn = hasReceipt
+            ? `<button class="btn-view-receipt" onclick="viewReceiptModal('${safeReceiptParam}')">Receipt</button>`
             : '<span style="color:#94a3b8; font-size:12px;">None</span>';
 
         tbody.innerHTML += `
             <tr>
-                <td style="font-weight:700; color:#2563eb;">${order.orderId || '-'}</td>
-                <td style="font-weight:600;">${order.name || '-'}</td>
-                <td>${order.phone || '-'}</td>
+                <td style="font-weight:700; color:#2563eb;">${safeOrderId}</td>
+                <td style="font-weight:600;">${safeName}</td>
+                <td>${safePhone}</td>
                 <td style="font-weight:800; color:#16a34a;">$${parseFloat(order.total || 0).toFixed(2)}</td>
                 <td>${receiptBtn}</td>
-                <td><span class="status-select ${statusClass}">${statusVal}</span></td>
-                <td style="color:#64748b; font-size:12px;">${order.date || '-'}</td>
+                <td><span class="status-select ${statusClass}">${escapeHTML(statusVal)}</span></td>
+                <td style="color:#64748b; font-size:12px;">${escapeHTML(order.date || '-')}</td>
             </tr>
         `;
     });
@@ -748,10 +793,10 @@ function renderUsersTable() {
     filtered.forEach(u => {
         tbody.innerHTML += `
             <tr>
-                <td style="font-weight:700; color:#10b981;">${u.userId || '-'}</td>
-                <td style="font-weight:700; color:#0f172a;">${u.username || '-'}</td>
-                <td style="color:#2563eb;">${u.email || '-'}</td>
-                <td style="color:#64748b; font-size:12px;">${u.registerDate || '-'}</td>
+                <td style="font-weight:700; color:#10b981;">${escapeHTML(u.userId || '-')}</td>
+                <td style="font-weight:700; color:#0f172a;">${escapeHTML(u.username || '-')}</td>
+                <td style="color:#2563eb;">${escapeHTML(u.email || '-')}</td>
+                <td style="color:#64748b; font-size:12px;">${escapeHTML(u.registerDate || '-')}</td>
             </tr>
         `;
     });
